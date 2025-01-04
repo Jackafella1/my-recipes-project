@@ -1,3 +1,8 @@
-* {
-    align-items: center;
+header {
+    
+    text-align: center
+};
+#recipes-container {
+    display: none;
+
 };

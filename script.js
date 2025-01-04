@@ -87,3 +87,8 @@ document.getElementById("search-button").addEventListener("click", () => {
     searchRecipesByMeat(selectedMeat);
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const recipesContainer = document.getElementById("recipes-container");
+    recipesContainer.style.display = 'none';  // Hide the container initially
+});
+
