@@ -3,7 +3,8 @@ const recipesImage = document.getElementById("recipes-image");
 const generateRecipesBtn = document.getElementById("recipes-button");
 
 // Replace with your Spoonacular API key
-const apiKey = '8a65ad549e8b4574b18fb02e36c691a1';
+require('dotenv').config();
+const apiKey = process.env.API_KEY;
 
 // Function to search recipes by selected meat using async/await
 async function searchRecipesByMeat(meatType) {
@@ -71,6 +72,14 @@ async function searchRandomRecipesByMeat(randomMeatType) {
         console.error('Error fetching random recipes by meat:', error);
     }
 }
+// Function to clear the search results and reset dropdown
+function clearHunt() {
+    console.log("Clear Hunt button clicked!");
+    const resultsContainer = document.getElementById("recipe-results");
+    const meatSelect = document.getElementById("meat-select");
+    resultsContainer.innerHTml = '';
+    meatSelect.value = "chicken";
+}
 
 // Add event listener for button click to search and display random recipe based on meat
 document.getElementById("random-meat-recipes-button").addEventListener("click", () => {
@@ -83,6 +92,8 @@ document.getElementById("search-button").addEventListener("click", () => {
     const selectedMeat = document.getElementById("meat-select").value;
     searchRecipesByMeat(selectedMeat);
 });
+
+document.getElementById("clear-hunt-button").addEventListener("click", clearHunt);
 
 // Hide the recipe container initially
 document.addEventListener("DOMContentLoaded", () => {
