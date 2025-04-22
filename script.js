@@ -2,12 +2,16 @@ const recipesTitle = document.getElementById("recipes-title");
 const recipesImage = document.getElementById("recipes-image");
 const generateRecipesBtn = document.getElementById("recipes-button");
 
+const apiKey = '8a65ad549e8b4574b18fb02e36c691a1'; // Replace with your actual API key
+
 // Replace with your Spoonacular API key
-require('dotenv').config();
-const apiKey = process.env.API_KEY;
+//require('dotenv').config();
+//const apiKey = process.env.API_KEY;
 
 // Function to search recipes by selected meat using async/await
 async function searchRecipesByMeat(meatType) {
+    const loading = document.getElementById("loading");
+    loading.style.display = "block"; // Show loading spinner
     const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?query=${meatType}&apiKey=${apiKey}`;
     
     try {
@@ -35,11 +39,15 @@ async function searchRecipesByMeat(meatType) {
         }
     } catch (error) {
         console.error('Error fetching data:', error);
+    } finally {
+        loading.style.display = "none"; // Hide loading spinner
     }
 }
 
 // Function to search for a random recipe by meat using async/await
 async function searchRandomRecipesByMeat(randomMeatType) {
+    const loading = document.getElementById("loading");
+    loading.style.display = "block"; // Show loading spinner
     const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?query=${randomMeatType}&apiKey=${apiKey}`;
 
     try {
@@ -70,6 +78,8 @@ async function searchRandomRecipesByMeat(randomMeatType) {
         }
     } catch (error) {
         console.error('Error fetching random recipes by meat:', error);
+    } finally {
+        loading.style.display = "none"; // Hide loading spinner
     }
 }
 // Function to clear the search results and reset dropdown
@@ -77,7 +87,7 @@ function clearHunt() {
     console.log("Clear Hunt button clicked!");
     const resultsContainer = document.getElementById("recipe-results");
     const meatSelect = document.getElementById("meat-select");
-    resultsContainer.innerHTml = '';
+    resultsContainer.innerHTML = '';
     meatSelect.value = "chicken";
 }
 
