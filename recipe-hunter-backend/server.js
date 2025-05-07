@@ -11,7 +11,7 @@ const app = express(); // Creates an instance of the Express application
 const PORT = process.env.PORT || 3000; // Sets the port for the server, using an environment variable or defaulting to 3000
 
 // Enables CORS to allow the frontend to make requests to the backend
-app.use(cors({ origin: ['http://127.0.0.1:3001', 'http://localhost:3001'] })); // Enable CORS for frontend)); // Applies CORS middleware to allow requests from different origins (e.g., frontend on a different port)
+app.use(cors({ origin: ['http://127.0.0.1:8081', 'http://localhost:8081'] })); // Enable CORS for frontend)); // Applies CORS middleware to allow requests from different origins (e.g., frontend on a different port)
 
 // Validate API key
 if (!process.env.API_KEY) {
