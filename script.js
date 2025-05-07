@@ -33,11 +33,14 @@ async function searchRecipesByMeat(meatType) { // Defines an async function to f
         } else {
             recipes.forEach(recipe => { // Iterates over each recipe in the recipes array
                 const recipeElement = document.createElement('div'); // Creates a new <div> element to hold a single recipe
+                const instructions = recipe.instructions || 'Instructions not available.';
                 // Sets the inner HTML of the div with recipe details using a template literal
-                recipeElement.innerHTML = ` 
+                recipeElement.innerHTML = `
                     <h3>${recipe.title}</h3> <!-- Adds the recipe title as a heading -->
                     <img src="${recipe.image}" alt="${recipe.title}" width="200"> <!-- Adds an image of the recipe with a fixed width-->
-                    <p><a href="https://spoonacular.com/recipes/${recipe.title}-${recipe.id}" target="_blank">View Recipe</a></p> <!-- Adds a link to the full recipe on Spoonacular-->
+                    <h4>Instructions:</h4>
+                    <p>${instructions}</p> <!-- Displays the instructions -->
+                    <p><a href="https://spoonacular.com/recipes/${recipe.title}-${recipe.id}" target="_blank">View on Spoonacular</a></p> <!-- Adds a link to the full recipe on Spoonacular-->
                 `;
                 resultsContainer.appendChild(recipeElement); // Appends the recipe div to the results container
             });
@@ -62,7 +65,7 @@ async function searchRandomRecipesByMeat(randomMeatType) { // Defines an async f
 
         if (!response.ok) { // Checks if the response status is not OK
             const errorData = await response.json(); // Parses the response body as JSON to get error details
-            throw new Error('Backend responded with status ${response.status}'); // Throws an error with the response status if the request failed
+            throw new Error(`Backend responded with status ${response.status}`); // Throws an error with the response status if the request failed
         
         }
         const data = await response.json(); // Parses the response body as JSON to get the recipe data
@@ -77,15 +80,14 @@ async function searchRandomRecipesByMeat(randomMeatType) { // Defines an async f
             resultsContainer.innerHTML = 'No recipes found.'; // Displays a message if no recipes are found
         } else { // If a recipe is found
             const randomRecipe = recipes[0]; // Selects the first (and only) recipe from the array (backend returns one random recipe)
-            const recipeElement = document.createElement('div'); // Creates a new <div> element for the random recipe
-        
-            
-
-            // Display the random recipe
+            const recipeElement = document.createElement('div');
+            const instructions = randomRecipe.instructions || 'Instructions not available.'; // Retrieves the instructions for the recipe, defaulting to a message if not available
            // Sets the inner HTML with recipe details using a template literal
             recipeElement.innerHTML = ` 
                 <h3>${randomRecipe.title}</h3> <!-- Adds the recipe title as a heading -->
                 <img src="${randomRecipe.image}" alt="${randomRecipe.title}" width="200"> <!-- Adds an image of the recipe -->
+                <h4>Instructions:</h4>
+                <p>${instructions}</p> <!-- Displays the instructions -->
                 <p><a href="https://spoonacular.com/recipes/${randomRecipe.title}-${randomRecipe.id}" target="_blank">View Recipe</a></p> <!-- Adds a link to the full recipe -->
             `;
             resultsContainer.appendChild(recipeElement); // Appends the recipe div to the results container
