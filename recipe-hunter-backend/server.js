@@ -9,12 +9,19 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({ origin: ['http://127.0.0.1:8081', 'http://localhost:8081'] }));
-
+app.use(cors({ origin: ['http://localhost:8081', 'https://my-recipes-project.vercel.app'],
+    methods: ['GET', 'POST', 'OPTIONS'], // Specify allowed methods
+    allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed headers
+ }));
 if (!process.env.API_KEY) {
     console.error('Error: API_KEY is not set in .env');
     process.exit(1);
 }
+// Health check endpoint for Render
+app.get('/healthz', (req, res) => {
+    res.status(200).send('OK');
+});
+
 
 // Endpoint to search recipes by meat type (returns 2 recipes)
 app.get('/recipes/:meatType', async (req, res) => {
