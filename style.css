@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Raleway', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #FFFFFF;
@@ -10,15 +10,64 @@ body {
 header {
     background-color: #1C2833;
     color: #FFFFFF;
-    text-align: center;
     padding: 1.5rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-header h1 {
+/* Use flexbox to layout the logo and title on the same row */
+.header-container {
+    display: flex;
+    align-items: center; /* Vertically center the logo and title */
+    justify-content: flex-start; /* Align logo to the left */
+    gap: 1rem; /* Add spacing between logo and title */
+}
+
+/* Logo size and styling */
+.header-logo {
+    width: 150px;
+    height: auto;
+    border-radius: 50%;
+    background-color: #1C2833;
+    padding: 8px;
+}
+
+/* Style the title to be centered in the remaining space */
+.header-container h1 {
+    flex: 1; /* Take the remaining space */
     margin: 0;
+    margin-right: 9rem;
+    font-family: 'Lobster', cursive;
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: 400;
+    text-align: center; /* Center the title */
+    color: #FFFFFF;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Center the header content below the logo and title */
+.header-content {
+    margin-top: 1rem; /* Add space between title/logo and content below */
+    text-align: center; /* Center the dropdown and buttons */
+}
+
+/* Center the Clear Hunt button */
+#clear-hunt-button {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #D5DBDB;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #FDF498;
+    color: #1C2833;
+    border: none;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+#clear-hunt-button:hover {
+    background-color: #F0E07A;
+    transform: scale(1.05);
 }
 
 header h2 {
@@ -35,9 +84,9 @@ main {
 
 label {
     font-size: 1.1rem;
-    color: #FFFFFF; /* Adjusted for visibility on dark header */
-    display: block; /* Stack label above select */
-    margin-bottom: 0.5rem; /* Add spacing between label and select */
+    color: #FFFFFF;
+    display: block;
+    margin-bottom: 0.5rem;
 }
 
 select, button {
@@ -52,17 +101,16 @@ select, button {
 select {
     background-color: #FFFFFF;
     color: #1C2833;
-    display: block; /* Ensure select takes full width of container for centering */
-    width: 200px; /* Fixed width for consistency */
-    margin: 0 auto; /* Center the select within the container */
+    display: block;
+    width: 200px;
+    margin: 0 auto;
 }
 
-/* Adjust the label and select container */
 .label-select-container {
-    text-align: center; /* Center the content (label and select) */
-    display: block; /* Ensure the container behaves as a block for centering */
-    margin: 0 auto; /* Center the container within the header */
-    width: 100%; /* Ensure the container takes full width for proper centering */
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
 }
 
 button {
@@ -140,20 +188,12 @@ button:hover {
     text-align: left;
     padding: 0.5rem;
 }
+@media (max-width: 600px) {
+    .header-container h1 {
+        font-size: 2rem;
+    }
+}
 
 #recipes-container {
     /* Ensure visibility */
-}
-.header-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.header-logo {
-    width: 100px;
-    height: auto;
-    border-radius: 50%;
-    background-color: #1C2833; /* Matches the header background */
-    padding: 5px;
 }

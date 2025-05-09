@@ -4,40 +4,41 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
     <title>Meal Selector</title>
     <script src="script.js" defer></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <div class="header-container">
-            <img src="logo1trans.png" alt="Recipe Hunter: Meat Edition Logo" class="header-logo"> 
+            <!-- Logo and title on the same row -->
+            <img src="logo1trans.png" alt="Recipe Hunter: Meat Edition Logo" class="header-logo">
+            <h1>Recipe Hunter: Meat Edition</h1>
         </div>
-        <h1>Recipe Hunter: Meat Edition</h1>
-        <!-- Centered dropdown for selecting meat type with symbols -->
-        <div class="label-select-container">
-            <label for="meat-select">Find Your Meat Match</label>
-            <select id="meat-select">
-                <option value="chicken">🐔 Chicken</option>
-                <option value="beef">🐮 Beef</option>
-                <option value="pork">🐷 Pork</option>
-                <option value="lamb">🐑 Lamb</option>
-                <option value="turkey">🦃 Turkey</option>
-                <option value="fish">🐟 Fish</option>
-                <option value="shrimp">🦐 Shrimp</option>
-                <option value="duck">🦆 Duck</option>
-            </select>
+        <div class="header-content">
+            <!-- Centered dropdown for selecting meat type with symbols -->
+            <div class="label-select-container">
+                <label for="meat-select">Find Your Meat Match</label>
+                <select id="meat-select">
+                    <option value="chicken">🐔 Chicken</option>
+                    <option value="beef">🐮 Beef</option>
+                    <option value="pork">🐷 Pork</option>
+                    <option value="lamb">🐑 Lamb</option>
+                    <option value="turkey">🦃 Turkey</option>
+                    <option value="fish">🐟 Fish</option>
+                    <option value="shrimp">🦐 Shrimp</option>
+                    <option value="duck">🦆 Duck</option>
+                </select>
+            </div>
+            <div class="buttons-container">
+                <button id="search-button">Hunt for Your Perfect Recipe</button>
+                <button id="random-meat-recipes-button">Hunt for a Random Recipe</button>
+            </div>
+            <button id="clear-hunt-button">Clear Hunt</button>
         </div>
-        <div class="buttons-container">
-            <button id="search-button">Hunt for Your Perfect Recipe</button>
-            <button id="random-meat-recipes-button">Hunt for a Random Recipe</button>
-        </div>
-        <button id="clear-hunt-button">Clear Hunt</button>
     </header>
     <main id="recipes-container">
         <span id="loading" style="display: none;">Loading Recipes</span>
-        <!--<img id="recipes-image" alt="recipes-appear-here"> -->
         <h2 id="recipes-title"></h2>
         <div id="recipe-results">
             <!-- Display recipe results here -->

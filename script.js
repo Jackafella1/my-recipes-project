@@ -33,19 +33,19 @@ async function searchRecipesByMeat(meatType) {
             recipes.forEach((recipe, index) => {
                 const recipeElement = document.createElement('div');
                 const instructions = recipe.instructions || 'Instructions not available.';
-                const escapedInstructions = instructions.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Correct escaping
+                const escapedInstructions = instructions.replace(/</g, '<').replace(/>/g, '>'); // Correct escaping
                 console.log(`Generating HTML for ${recipe.title}:`, `
                     <h3>${recipe.title}</h3>
                     <img src="${recipe.image}" alt="${recipe.title}" width="200" onerror="this.onerror=null; this.src='https://picsum.photos/200'; this.alt='Image unavailable';">
-                    <a href="#" class="toggle-instructions" data-index="${index}">View Instructions</a>
-                    <p><a href="https://spoonacular.com/recipes/${encodeURIComponent(recipe.title.replace(/\s+/g, '-'))}-${recipe.id}" target="_blank">View on Spoonacular</a></p>
+                    <a href="#" class="toggle-instructions" data-index="${index}">Hunter’s Guide</a>
+                    <p><a href="https://spoonacular.com/recipes/${encodeURIComponent(recipe.title.replace(/\s+/g, '-'))}-${recipe.id}" target="_blank">Hunter’s Intel</a></p>
                     <div class="instructions-content" id="instructions-${index}" style="display: none;">${escapedInstructions}</div>
                 `);
                 recipeElement.innerHTML = `
                     <h3>${recipe.title}</h3>
                     <img src="${recipe.image}" alt="${recipe.title}" width="200" onerror="this.onerror=null; this.src='https://picsum.photos/200'; this.alt='Image unavailable';">
-                    <a href="#" class="toggle-instructions" data-index="${index}">View Instructions</a>
-                    <p><a href="https://spoonacular.com/recipes/${encodeURIComponent(recipe.title.replace(/\s+/g, '-'))}-${recipe.id}" target="_blank">View on Spoonacular</a></p>
+                    <a href="#" class="toggle-instructions" data-index="${index}">Hunter’s Guide</a>
+                    <p><a href="https://spoonacular.com/recipes/${encodeURIComponent(recipe.title.replace(/\s+/g, '-'))}-${recipe.id}" target="_blank">Hunter’s Intel</a></p>
                     <div class="instructions-content" id="instructions-${index}" style="display: none;">${escapedInstructions}</div>
                 `;
                 resultsContainer.appendChild(recipeElement);
@@ -91,12 +91,12 @@ async function searchRandomRecipesByMeat(randomMeatType) {
             const randomRecipe = recipes[0];
             const recipeElement = document.createElement('div');
             const instructions = randomRecipe.instructions || 'Instructions not available.';
-            const escapedInstructions = instructions.replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Correct escaping
+            const escapedInstructions = instructions.replace(/</g, '<').replace(/>/g, '>'); // Correct escaping
             recipeElement.innerHTML = `
                 <h3>${randomRecipe.title}</h3>
                 <img src="${randomRecipe.image}" alt="${randomRecipe.title}" width="200" onerror="this.onerror=null; this.src='https://picsum.photos/200'; this.alt='Image unavailable';">
-                <a href="#" class="toggle-instructions" data-index="0">View Instructions</a>
-                <p><a href="https://spoonacular.com/recipes/${encodeURIComponent(randomRecipe.title.replace(/\s+/g, '-'))}-${randomRecipe.id}" target="_blank">View on Spoonacular</a></p>
+                <a href="#" class="toggle-instructions" data-index="0">Hunter’s Guide</a>
+                <p><a href="https://spoonacular.com/recipes/${encodeURIComponent(randomRecipe.title.replace(/\s+/g, '-'))}-${randomRecipe.id}" target="_blank">Hunter’s Intel</a></p>
                 <div class="instructions-content" id="instructions-0" style="display: none;">${escapedInstructions}</div>
             `;
             resultsContainer.appendChild(recipeElement);
@@ -105,6 +105,54 @@ async function searchRandomRecipesByMeat(randomMeatType) {
         console.error('Error fetching random recipes by meat:', error);
         const resultsContainer = document.getElementById("recipe-results");
         resultsContainer.innerHTML = 'Error fetching random recipes. Please try again.';
+    } finally {
+        loading.style.display = "none";
+    }
+}
+
+// Function to search for a random recipe from all meats
+async function searchRandomRecipeAllMeats() {
+    console.log(`Fetching random recipe from all meats`);
+    const loading = document.getElementById("loading");
+    loading.style.display = "block";
+    const apiUrl = `http://localhost:3000/random-all`;
+    console.log(`Request URL: ${apiUrl}`);
+    
+    try {
+        const response = await fetch(apiUrl);
+        console.log(`Response status: ${response.status}`);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Backend responded with status ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Response data:", data);
+
+        const resultsContainer = document.getElementById("recipe-results");
+        resultsContainer.innerHTML = '';
+
+        const recipes = data.results || [];
+        console.log(`Found ${recipes.length} recipes`);
+        if (recipes.length === 0) {
+            resultsContainer.innerHTML = 'No recipes found.';
+        } else {
+            const randomRecipe = recipes[0]; // Only 1 recipe expected
+            const recipeElement = document.createElement('div');
+            const instructions = randomRecipe.instructions || 'Instructions not available.';
+            const escapedInstructions = instructions.replace(/</g, '<').replace(/>/g, '>'); // Correct escaping
+            recipeElement.innerHTML = `
+                <h3>${randomRecipe.title}</h3>
+                <img src="${randomRecipe.image}" alt="${randomRecipe.title}" width="200" onerror="this.onerror=null; this.src='https://picsum.photos/200'; this.alt='Image unavailable';">
+                <a href="#" class="toggle-instructions" data-index="0">Hunter’s Guide</a>
+                <p><a href="https://spoonacular.com/recipes/${encodeURIComponent(randomRecipe.title.replace(/\s+/g, '-'))}-${randomRecipe.id}" target="_blank">Hunter’s Intel</a></p>
+                <div class="instructions-content" id="instructions-0" style="display: none;">${escapedInstructions}</div>
+            `;
+            resultsContainer.appendChild(recipeElement);
+        }
+    } catch (error) {
+        console.error('Error fetching random recipe from all meats:', error);
+        const resultsContainer = document.getElementById("recipe-results");
+        resultsContainer.innerHTML = 'Error fetching random recipe. Please try again.';
     } finally {
         loading.style.display = "none";
     }
@@ -121,8 +169,7 @@ function clearHunt() {
 
 // Add event listeners
 document.getElementById("random-meat-recipes-button").addEventListener("click", () => {
-    const selectedMeat = document.getElementById("meat-select").value;
-    searchRandomRecipesByMeat(selectedMeat);
+    searchRandomRecipeAllMeats();
 });
 
 document.getElementById("search-button").addEventListener("click", () => {
