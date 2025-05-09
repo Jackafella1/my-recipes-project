@@ -67,7 +67,7 @@ async function searchRandomRecipesByMeat(randomMeatType) {
     console.log(`Fetching random recipe for meat type: ${randomMeatType}`);
     const loading = document.getElementById("loading");
     loading.style.display = "block";
-    const apiUrl = `http://localhost:3000/random/${randomMeatType}`;
+    const apiUrl = `https://my-recipes-project.onrender.com/recipes/${meatType}`; // Updated URL`;
     console.log(`Request URL: ${apiUrl}`);
     
     try {
@@ -115,7 +115,7 @@ async function searchRandomRecipeAllMeats() {
     console.log(`Fetching random recipe from all meats`);
     const loading = document.getElementById("loading");
     loading.style.display = "block";
-    const apiUrl = `http://localhost:3000/random-all`;
+    const apiUrl = `https://my-recipes-project.onrender.com/random-all`; // Update if renamed
     console.log(`Request URL: ${apiUrl}`);
     
     try {
