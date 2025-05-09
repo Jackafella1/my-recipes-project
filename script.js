@@ -8,7 +8,7 @@ async function searchRecipesByMeat(meatType) {
     const loading = document.getElementById("loading");
     if (!loading) console.error("Loading element not found");
     loading.style.display = "block";
-    const apiUrl = `http://localhost:3000/recipes/${meatType}`;
+    const apiUrl = `https://my-recipes-project.onrender.com/recipes/${meatType}`;
     console.log(`Request URL: ${apiUrl}`);
     
     try {
