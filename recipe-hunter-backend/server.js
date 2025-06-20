@@ -1,6 +1,17 @@
-const result = require('dotenv').config();
-console.log('Dotenv result:', result);
-console.log('API_KEY:', process.env.API_KEY);
+// Load .env only in development
+if (process.env.NODE_ENV !== 'production') {
+  const result = require('dotenv').config();
+  console.log('Dotenv result:', result);
+}
+
+// Log the key status
+console.log('API_KEY:', process.env.API_KEY || 'Not set');
+
+// Enforce key presence
+if (!process.env.API_KEY) {
+  console.error('Error: API_KEY is not set!');
+  process.exit(1);
+}
 
 const express = require('express');
 const axios = require('axios');
