@@ -9,7 +9,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({ origin: ['http://localhost:8081', 'https://my-recipes-project.vercel.app'],
+app.use(cors({ origin: ['http://localhost:8081', 'http://127.0.0.1:5500','https://my-recipes-project.vercel.app'],
     methods: ['GET', 'POST', 'OPTIONS'], // Specify allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed headers
  }));
