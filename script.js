@@ -8,7 +8,7 @@ async function searchRecipesByMeat(meatType) {
     const loading = document.getElementById("loading");
     if (!loading) console.error("Loading element not found");
     loading.style.display = "block";
-    const apiUrl = `https://my-recipes-project.onrender.com/recipes/${meatType}`;
+    const apiUrl = `https://my-recipes-project.onrender.com/recipes/${meatType}`; // Updated URL for local testing
     console.log(`Request URL: ${apiUrl}`);
     
     try {
@@ -67,7 +67,7 @@ async function searchRandomRecipesByMeat(randomMeatType) {
     console.log(`Fetching random recipe for meat type: ${randomMeatType}`);
     const loading = document.getElementById("loading");
     loading.style.display = "block";
-    const apiUrl = `https://my-recipes-project.onrender.com/recipes/${meatType}`; // Updated URL`;
+    const apiUrl = `https://my-recipes-project.onrender.com/recipes/${randomMeatType}`; // Updated URL`;
     console.log(`Request URL: ${apiUrl}`);
     
     try {
@@ -159,24 +159,34 @@ async function searchRandomRecipeAllMeats() {
 }
 
 // Function to clear the search results and reset dropdown
+// Clear Hunt button resets dropdown to placeholder
 function clearHunt() {
-    console.log("Clear Hunt button clicked!");
-    const resultsContainer = document.getElementById("recipe-results");
-    const meatSelect = document.getElementById("meat-select");
-    resultsContainer.innerHTML = '';
-    meatSelect.value = "chicken";
+  console.log("Clear Hunt button clicked!");
+  const resultsContainer = document.getElementById("recipe-results");
+  const meatSelect = document.getElementById("meat-select");
+
+  resultsContainer.innerHTML = "";
+  meatSelect.value = "";  // assumes your placeholder option has value=""
 }
+
 
 // Add event listeners
 document.getElementById("random-meat-recipes-button").addEventListener("click", () => {
     searchRandomRecipeAllMeats();
 });
-
+// Search button with guard clause
 document.getElementById("search-button").addEventListener("click", () => {
-    const selectedMeat = document.getElementById("meat-select").value;
-    console.log(`Search button clicked for meat: ${selectedMeat}`);
-    searchRecipesByMeat(selectedMeat);
+  const selectedMeat = document.getElementById("meat-select").value;
+
+  if (!selectedMeat) {
+    alert("Please pick a meat type first!");
+    return;
+  }
+
+  console.log(`Search button clicked for meat: ${selectedMeat}`);
+  searchRecipesByMeat(selectedMeat);
 });
+
 
 document.getElementById("clear-hunt-button").addEventListener("click", clearHunt);
 
